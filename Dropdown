@@ -1,0 +1,28 @@
+/** @jsx jsx */
+import { jsx } from "@emotion/core";
+import React from 'react'
+import { Dropdown,Icon } from '@contentstack/venus-components'
+import ContentstackSDK from "@contentstack/app-sdk";
+
+function  ImageElement (){
+  return <select name="Accordion" id="accordion">
+         <option value="anchor">Anchor</option>
+         <option value="codetext">Code Tex</option>
+         </select>
+}
+
+export default ContentstackSDK.init().then(async (sdk) => {
+    const extensionObj = await sdk["location"];
+    const RTE = await extensionObj["RTEPlugin"];
+    if(!RTE) return ;
+    const Highlight = RTE('highlight', () => ({
+        title: 'Dropdown',
+        icon: <Icon style={{padding: '0 6px'}} icon="Dropdown" size="original" />,
+        render: ImageElement,
+        displayOn: ['hoveringToolbar'],
+        elementType: ['block']
+    }));
+    return {
+        Highlight
+    };
+});
